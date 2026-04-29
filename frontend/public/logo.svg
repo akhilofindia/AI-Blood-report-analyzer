@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" fill="none">
+  <rect width="1200" height="630" rx="24" fill="#F6FBFB" />
+  <g transform="translate(140,90)">
+    <rect width="920" height="450" rx="16" fill="url(#bg)" />
+    <defs>
+      <linearGradient id="bg" x1="0" x2="1">
+        <stop offset="0" stop-color="#E6F7F2" />
+        <stop offset="1" stop-color="#D8F0EA" />
+      </linearGradient>
+    </defs>
+    <g transform="translate(140,60)">
+      <!-- Heart + cross icon -->
+      <g transform="translate(0,0) scale(1.6)">
+        <path d="M124 40c-21-28-58-36-88-13-34-24-78-10-98 20-21 31-9 71 32 112 34 33 77 55 154 116 77-61 120-83 154-116 41-41 53-81 32-112-20-30-64-44-98-20-30-23-67-15-88 13z" fill="#FF667A"/>
+        <rect x="80" y="70" width="40" height="100" rx="8" fill="#fff" transform="rotate(-15 100 120)"/>
+        <rect x="60" y="100" width="100" height="28" rx="6" fill="#fff" transform="rotate(-15 110 114)"/>
+      </g>
+      <!-- Text -->
+      <text x="320" y="170" font-family="Segoe UI, Roboto, Arial" font-size="72" fill="#0F766E">Health Report</text>
+      <text x="320" y="230" font-family="Segoe UI, Roboto, Arial" font-size="36" fill="#115E59">Input & Summary</text>
+    </g>
+  </g>
+</svg>

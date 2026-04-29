@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="1200" viewBox="0 0 1200 1200" fill="none">
+  <rect width="1200" height="1200" rx="24" fill="#F6FBFB" />
+  <g transform="translate(300,260) scale(1.6)">
+    <path d="M124 40c-21-28-58-36-88-13-34-24-78-10-98 20-21 31-9 71 32 112 34 33 77 55 154 116 77-61 120-83 154-116 41-41 53-81 32-112-20-30-64-44-98-20-30-23-67-15-88 13z" fill="#FF667A"/>
+    <rect x="80" y="70" width="40" height="100" rx="8" fill="#fff" transform="rotate(-15 100 120)"/>
+    <rect x="60" y="100" width="100" height="28" rx="6" fill="#fff" transform="rotate(-15 110 114)"/>
+  </g>
+  <text x="600" y="960" font-family="Segoe UI, Roboto, Arial" font-size="72" text-anchor="middle" fill="#0F766E">Health Report</text>
+</svg>

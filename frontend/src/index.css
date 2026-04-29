@@ -1,0 +1,180 @@
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap');
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 200 20% 98%;
+    --foreground: 210 40% 15%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 210 40% 15%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 210 40% 15%;
+
+    --primary: 174 62% 40%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 200 25% 94%;
+    --secondary-foreground: 210 40% 20%;
+
+    --muted: 200 20% 96%;
+    --muted-foreground: 210 15% 50%;
+
+    --accent: 174 50% 92%;
+    --accent-foreground: 174 62% 30%;
+
+    --destructive: 0 72% 51%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 200 20% 88%;
+    --input: 200 20% 88%;
+    --ring: 174 62% 40%;
+
+    --radius: 0.75rem;
+
+    --sidebar-background: 0 0% 98%;
+    --sidebar-foreground: 240 5.3% 26.1%;
+    --sidebar-primary: 240 5.9% 10%;
+    --sidebar-primary-foreground: 0 0% 98%;
+    --sidebar-accent: 240 4.8% 95.9%;
+    --sidebar-accent-foreground: 240 5.9% 10%;
+    --sidebar-border: 220 13% 91%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
+
+    /* Custom medical theme tokens */
+    --medical-teal: 174 62% 40%;
+    --medical-teal-light: 174 50% 92%;
+    --medical-teal-dark: 174 62% 30%;
+    --medical-gradient: linear-gradient(135deg, hsl(174 62% 40%) 0%, hsl(190 60% 45%) 100%);
+    --medical-card-shadow: 0 4px 20px -4px hsl(200 20% 70% / 0.3);
+    --medical-card-shadow-hover: 0 8px 30px -4px hsl(174 62% 40% / 0.2);
+  }
+
+  .dark {
+    --background: 210 40% 8%;
+    --foreground: 200 20% 98%;
+
+    --card: 210 40% 12%;
+    --card-foreground: 200 20% 98%;
+
+    --popover: 210 40% 12%;
+    --popover-foreground: 200 20% 98%;
+
+    --primary: 174 62% 50%;
+    --primary-foreground: 210 40% 8%;
+
+    --secondary: 210 30% 18%;
+    --secondary-foreground: 200 20% 90%;
+
+    --muted: 210 30% 16%;
+    --muted-foreground: 200 15% 60%;
+
+    --accent: 174 40% 20%;
+    --accent-foreground: 174 50% 80%;
+
+    --destructive: 0 62% 45%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 210 30% 20%;
+    --input: 210 30% 20%;
+    --ring: 174 62% 50%;
+
+    --sidebar-background: 240 5.9% 10%;
+    --sidebar-foreground: 240 4.8% 95.9%;
+    --sidebar-primary: 224.3 76.3% 48%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 240 3.7% 15.9%;
+    --sidebar-accent-foreground: 240 4.8% 95.9%;
+    --sidebar-border: 240 3.7% 15.9%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground font-sans antialiased;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+  }
+}
+
+@layer components {
+  .medical-card {
+    @apply bg-card rounded-xl border border-border p-6;
+    box-shadow: var(--medical-card-shadow);
+    transition: box-shadow 0.3s ease, transform 0.2s ease;
+  }
+
+  .medical-card:hover {
+    box-shadow: var(--medical-card-shadow-hover);
+  }
+
+  .medical-input {
+    @apply w-full rounded-lg border border-input bg-background px-4 py-3 text-foreground placeholder:text-muted-foreground transition-all duration-200;
+  }
+
+  .medical-input:focus {
+    @apply outline-none ring-2 ring-ring ring-offset-2 ring-offset-background border-primary;
+  }
+
+  .medical-input:invalid:not(:placeholder-shown) {
+    @apply border-destructive;
+  }
+
+  .medical-label {
+    @apply block text-sm font-medium text-foreground mb-2;
+  }
+
+  .medical-hint {
+    @apply text-xs text-muted-foreground mt-1;
+  }
+
+  .section-title {
+    @apply text-lg font-semibold text-foreground flex items-center gap-2;
+  }
+
+  .gradient-text {
+    background: var(--medical-gradient);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+}
+
+@layer utilities {
+  .animate-fade-in {
+    animation: fadeIn 0.4s ease-out;
+  }
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(8px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .animate-slide-down {
+    animation: slideDown 0.3s ease-out;
+  }
+
+  @keyframes slideDown {
+    from {
+      opacity: 0;
+      max-height: 0;
+    }
+    to {
+      opacity: 1;
+      max-height: 500px;
+    }
+  }
+}
