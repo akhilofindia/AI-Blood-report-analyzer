@@ -63,10 +63,18 @@ app.post('/analyze', (req, res) => {
 
     console.log('Processing request for data:', processedData);
 
-    const pythonProcess = spawn('python', [path.join(__dirname, 'predict.py')]);
+    const pythonCmd = process.env.PYTHON_CMD || (process.platform === 'win32' ? 'python' : 'python3');
+    const pythonProcess = spawn(pythonCmd, [path.join(__dirname, 'predict.py')]);
 
     let result = '';
     let error = '';
+
+    pythonProcess.on('error', (err) => {
+        console.error('Failed to start Python process:', err);
+        if (!res.headersSent) {
+            return res.status(500).json({ status: 'error', message: `Failed to start Python process: ${err.message}` });
+        }
+    });
 
     pythonProcess.stdin.write(JSON.stringify(processedData));
     pythonProcess.stdin.end();
@@ -82,7 +90,10 @@ app.post('/analyze', (req, res) => {
     pythonProcess.on('close', (code) => {
         if (code !== 0) {
             console.error(`Python script exited with code ${code}. Error: ${error}`);
-            return res.status(500).json({ status: 'error', message: 'Model prediction failed', error: error });
+            if (!res.headersSent) {
+                return res.status(500).json({ status: 'error', message: 'Model prediction failed', error: error });
+            }
+            return;
         }
 
         try {
