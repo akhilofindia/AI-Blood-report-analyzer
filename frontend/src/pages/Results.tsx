@@ -34,6 +34,7 @@ import { Button } from "@/components/ui/button";
 import SectionCard from "@/components/SectionCard";
 import { useAuth } from "@/contexts/AuthContext";
 import { getApiBase } from "@/lib/api";
+import html2pdf from "html2pdf.js";
 
 // Reference ranges for blood markers
 const REFERENCE_RANGES: Record<string, { min: number; max: number; unit: string; description: string }> = {
@@ -185,6 +186,21 @@ const Results = () => {
     const isHealthy = String(prediction || '').toLowerCase().includes("healthy");
     const insights = getInsightForDiagnosis(String(prediction || ''));
 
+    const handleDownloadPdf = () => {
+        const element = document.getElementById("pdf-content");
+        if (!element) return;
+
+        const opt = {
+            margin:       0.5,
+            filename:     'Health_Report_Analysis.pdf',
+            image:        { type: 'jpeg', quality: 0.98 },
+            html2canvas:  { scale: 2, useCORS: true },
+            jsPDF:        { unit: 'in', format: 'letter', orientation: 'portrait' }
+        };
+
+        html2pdf().set(opt).from(element).save();
+    };
+
     // Prepare data for the Radar Chart (Fingerprint)
     const chartData = formData ? Object.entries(formData)
         .filter(([key]) => ["hemoglobin", "rbcCount", "wbcCount", "platelets", "mcv"].includes(key))
@@ -230,7 +246,7 @@ const Results = () => {
                             <User className="w-4 h-4" />
                             My Profile
                         </Button>
-                        <Button variant="outline" size="sm" className="hidden sm:flex gap-2">
+                        <Button variant="outline" size="sm" className="hidden sm:flex gap-2" onClick={handleDownloadPdf}>
                             <Download className="w-4 h-4" />
                             Download PDF
                         </Button>
@@ -238,7 +254,7 @@ const Results = () => {
                 </div>
             </header>
 
-            <main className="container mx-auto px-4 py-8 max-w-5xl">
+            <main id="pdf-content" className="container mx-auto px-4 py-8 max-w-5xl bg-background">
                 {/* Refined Result Hero */}
                 <div className={`p-10 rounded-[2.5rem] mb-10 animate-fade-in relative overflow-hidden transition-all duration-700 border shadow-sm ${
                     isHealthy 
@@ -466,7 +482,7 @@ const Results = () => {
 
                         <SectionCard title="Recommended Actions" icon={Stethoscope}>
                             <div className="space-y-3">
-                                <Button className="w-full justify-start gap-3 h-auto py-4 rounded-xl" variant="outline">
+                                <Button className="w-full justify-start gap-3 h-auto py-4 rounded-xl" variant="outline" onClick={handleDownloadPdf}>
                                     <div className="p-2 rounded-lg bg-primary/10">
                                         <FileText className="w-4 h-4 text-primary" />
                                     </div>

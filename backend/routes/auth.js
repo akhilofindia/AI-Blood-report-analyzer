@@ -66,25 +66,16 @@ router.post('/register', async (req, res) => {
 router.post('/login', async (req, res) => {
   if (!isDbReady()) return dbUnavailable(res);
 
-  const { email, password, role } = req.body || {};
+  const { email, password } = req.body || {};
 
-  if (!email || !password || !role) {
-    return res.status(400).json({ ok: false, message: 'Email, password, and role are required.' });
-  }
-  if (!['doctor', 'patient'].includes(role)) {
-    return res.status(400).json({ ok: false, message: 'Role must be doctor or patient.' });
+  if (!email || !password) {
+    return res.status(400).json({ ok: false, message: 'Email and password are required.' });
   }
 
   const normalizedEmail = String(email).toLowerCase().trim();
   const user = await User.findOne({ email: normalizedEmail });
   if (!user) {
     return res.status(401).json({ ok: false, message: 'Invalid email or password.' });
-  }
-  if (user.role !== role) {
-    return res.status(401).json({
-      ok: false,
-      message: `This account is registered as a ${user.role}. Sign in with the correct role.`,
-    });
   }
 
   const match = await bcrypt.compare(String(password), user.passwordHash);

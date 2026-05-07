@@ -20,7 +20,7 @@ type AuthContextValue = {
   user: AuthUser | null;
   token: string | null;
   isLoading: boolean;
-  login: (email: string, password: string, role: UserRole) => Promise<void>;
+  login: (email: string, password: string) => Promise<void>;
   signup: (input: {
     email: string;
     password: string;
@@ -96,11 +96,11 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     };
   }, []);
 
-  const login = useCallback(async (email: string, password: string, role: UserRole) => {
+  const login = useCallback(async (email: string, password: string) => {
     const res = await fetch(`${getApiBase()}/api/auth/login`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ email, password, role }),
+      body: JSON.stringify({ email, password }),
     });
     const data = await parseJson(res);
     if (!res.ok || !data.ok || !data.token || !data.user) {

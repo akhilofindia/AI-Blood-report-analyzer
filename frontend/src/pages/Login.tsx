@@ -1,12 +1,11 @@
 import { useEffect, useState } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
-import { Activity, Stethoscope, UserRound } from "lucide-react";
+import { Activity } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { useAuth, type UserRole } from "@/contexts/AuthContext";
+import { useAuth } from "@/contexts/AuthContext";
 import { useToast } from "@/hooks/use-toast";
 
 export default function Login() {
@@ -14,9 +13,9 @@ export default function Login() {
   const { toast } = useToast();
   const navigate = useNavigate();
   const location = useLocation();
-  const from = (location.state as { from?: string } | null)?.from || "/profile";
+  let from = (location.state as { from?: string } | null)?.from || "/profile";
+  if (from === "/") from = "/profile";
 
-  const [role, setRole] = useState<UserRole>("patient");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [submitting, setSubmitting] = useState(false);
@@ -30,7 +29,7 @@ export default function Login() {
     e.preventDefault();
     setSubmitting(true);
     try {
-      await login(email, password, role);
+      await login(email, password);
       toast({ title: "Signed in", description: "Welcome back." });
       navigate(from, { replace: true });
     } catch (err) {
@@ -59,32 +58,10 @@ export default function Login() {
       <Card className="w-full max-w-md shadow-[var(--medical-card-shadow)]">
         <CardHeader>
           <CardTitle>Sign in</CardTitle>
-          <CardDescription>Choose your role and enter your credentials.</CardDescription>
+          <CardDescription>Enter your credentials to continue.</CardDescription>
         </CardHeader>
         <form onSubmit={handleSubmit}>
           <CardContent className="space-y-4">
-            <Tabs
-              value={role}
-              onValueChange={(v) => setRole(v as UserRole)}
-              className="w-full"
-            >
-              <TabsList className="grid w-full grid-cols-2">
-                <TabsTrigger value="doctor" className="gap-2">
-                  <Stethoscope className="h-4 w-4" />
-                  Doctor
-                </TabsTrigger>
-                <TabsTrigger value="patient" className="gap-2">
-                  <UserRound className="h-4 w-4" />
-                  Patient
-                </TabsTrigger>
-              </TabsList>
-              <TabsContent value="doctor" className="mt-0 pt-2 text-xs text-muted-foreground">
-                For healthcare providers reviewing CBC data.
-              </TabsContent>
-              <TabsContent value="patient" className="mt-0 pt-2 text-xs text-muted-foreground">
-                For patients entering their own lab values.
-              </TabsContent>
-            </Tabs>
 
             <div className="space-y-2">
               <Label htmlFor="email">Email</Label>
